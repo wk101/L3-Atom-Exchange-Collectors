@@ -69,11 +69,11 @@ class DataSource:
         :rtype: list
         """
         if isinstance(self.symbols_endpoint, str):
-            return requests.get(self.symbols_endpoint).json()
+            return requests.get(self.symbols_endpoint, timeout=60).json()
         elif isinstance(self.symbols_endpoint, list):
             res = []
             for endpoint in self.symbols_endpoint:
-                res.append(requests.get(endpoint).json())
+                res.append(requests.get(endpoint, timeout=60).json())
             return res
 
     def filter_symbols(self, sym_list: dict, filters: dict) -> dict:

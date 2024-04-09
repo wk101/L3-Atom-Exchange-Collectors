@@ -52,7 +52,7 @@ class Gemini(DataFeed):
         ret = []
         for sym in sym_filters:
             sym_info = requests.get(
-                self.symbols_info_endpoint.format(sym)).json()
+                self.symbols_info_endpoint.format(sym), timeout=60).json()
             ret.append(sym_info)
         return ret
 

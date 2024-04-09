@@ -1,4 +1,3 @@
-from random import random
 import asyncio
 from typing import Awaitable, Iterator, Union
 import websockets
@@ -12,6 +11,7 @@ from websockets.exceptions import InvalidStatusCode
 
 from l3_atom.exceptions import TooManyRetries
 from yapic import json
+import secrets
 
 
 class Feed(object):
@@ -417,7 +417,7 @@ class AsyncConnectionManager:
                     except Exception:
                         pass
                     if wait == -1:
-                        wait = limited * random.uniform(0.8, 1.2) * 60
+                        wait = limited * secrets.SystemRandom().uniform(0.8, 1.2) * 60
                         limited += 1
                     logging.warning(
                         '%s: rate limit exceeded, retrying in %d seconds', self.conn.id, wait)

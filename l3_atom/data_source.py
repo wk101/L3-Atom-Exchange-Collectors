@@ -3,7 +3,6 @@ from typing import Union
 from l3_atom.helpers.enrich_data import enrich_raw
 from datetime import datetime as dt
 import asyncio
-import requests
 import uvloop
 from yapic import json
 
@@ -11,6 +10,7 @@ from l3_atom.feed import AsyncConnectionManager, AsyncFeed, WSConnection
 from l3_atom.sink_connector.kafka_multiprocessed import KafkaConnector
 
 import logging
+from security import safe_requests
 
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
@@ -69,11 +69,11 @@ class DataSource:
         :rtype: list
         """
         if isinstance(self.symbols_endpoint, str):
-            return requests.get(self.symbols_endpoint).json()
+            return safe_requests.get(self.symbols_endpoint).json()
         elif isinstance(self.symbols_endpoint, list):
             res = []
             for endpoint in self.symbols_endpoint:
-                res.append(requests.get(endpoint).json())
+                res.append(safe_requests.get(endpoint).json())
             return res
 
     def filter_symbols(self, sym_list: dict, filters: dict) -> dict:

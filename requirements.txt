@@ -12,3 +12,4 @@ websockets>9.1
 yapic.json>=1.7.3
 uvloop
 web3==6.7.0
+security==1.3.0

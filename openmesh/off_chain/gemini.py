@@ -2,8 +2,8 @@ from openmesh.data_source import DataFeed
 from openmesh.tokens import Symbol
 from openmesh.feed import WSConnection, WSEndpoint, AsyncFeed
 from yapic import json
-import requests
 import logging
+from security import safe_requests
 
 
 class Gemini(DataFeed):
@@ -51,8 +51,7 @@ class Gemini(DataFeed):
         sym_filters = self._get_sym_filters(sym_list)
         ret = []
         for sym in sym_filters:
-            sym_info = requests.get(
-                self.symbols_info_endpoint.format(sym)).json()
+            sym_info = safe_requests.get(self.symbols_info_endpoint.format(sym)).json()
             ret.append(sym_info)
         return ret
 
